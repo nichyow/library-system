@@ -1,6 +1,3 @@
-Berikut adalah dokumentasi lengkap dengan perbaikan yang sesuai dengan kode yang Anda kirimkan.
-
----
 # **library-system - Dokumentasi Sistem**
 
 ## Deskripsi
