@@ -17,15 +17,60 @@ cd library-system
 ```
 2. **Install Dependencies**
 ```bash
-Copy code
 composer install
 ```
 3. **Konfigurasikan File `.env `:**
 Salin file .env.example menjadi .env.
 Pastikan kredensial database sudah sesuai.
-4. **Jalankan Server Lokal**
+File env ada di folder atau berikut ini :
 ```bash
-Copy code
+#--------------------------------------------------------------------
+# ENVIRONMENT
+#--------------------------------------------------------------------
+
+CI_ENVIRONMENT = development
+
+#--------------------------------------------------------------------
+# APP
+#--------------------------------------------------------------------
+
+app_baseURL = 'http://localhost:8080/'
+
+#--------------------------------------------------------------------
+# DATABASE
+#--------------------------------------------------------------------
+
+database.default.hostname = mysql-1e73275c-tst-01.h.aivencloud.com
+database.default.database = defaultdb
+database.default.username = avnadmin
+database.default.password = AVNS__A_pxyQwbTPWRVRmbcF
+database.default.DBDriver = MySQLi
+database.default.DBPrefix =
+database.default.port = 21959
+database.default.DBSocket =
+database.default.sslmode = required
+
+#--------------------------------------------------------------------
+# ENCRYPTION
+#--------------------------------------------------------------------
+
+# encryption.key =
+
+#--------------------------------------------------------------------
+# SESSION
+#--------------------------------------------------------------------
+
+# session.driver = 'CodeIgniter\Session\Handlers\FileHandler'
+# session.savePath = null
+
+#--------------------------------------------------------------------
+# LOGGER
+#--------------------------------------------------------------------
+
+# logger.threshold = 4
+```
+5. **Jalankan Server Lokal**
+```bash
 php spark serve
 Akses layanan di http://localhost:8080.
 ```
