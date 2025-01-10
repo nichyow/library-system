@@ -173,15 +173,26 @@ Contoh Response:
 }
 ```
 ---
-## **Struktur Database**
-Tabel `Borrowers`:
-- **id**:	INT	Primary Key.
-- **name**:	VARCHAR	Nama peminjam.
-- **email**:	VARCHAR	Email peminjam.
-- **phone_number**:	VARCHAR	Nomor telepon peminjam.
-- **book_title**:	VARCHAR	Judul buku yang dipinjam.
-- **borrow_date**:	DATE	Tanggal peminjaman.
-- **return_date**: 	DATE	Tanggal pengembalian.
+## Struktur Database
+
+### **Tabel Borrowers**
+| Field         | Tipe Data | Deskripsi                          |
+|---------------|-----------|------------------------------------|
+| id            | INT       | Primary Key                       |
+| name          | VARCHAR   | Nama peminjam                     |
+| email         | VARCHAR   | Email peminjam                    |
+| phone_number  | VARCHAR   | Nomor telepon peminjam            |
+| book_title    | VARCHAR   | Judul buku yang dipinjam          |
+| borrow_date   | DATE      | Tanggal peminjaman                |
+| return_date   | DATE      | Tanggal pengembalian              |
+
+### **Tabel Users**
+| Field         | Tipe Data | Deskripsi                          |
+|---------------|-----------|------------------------------------|
+| id            | INT       | Primary Key                       |
+| username      | VARCHAR   | Nama pengguna unik                |
+| password      | VARCHAR   | Kata sandi terenkripsi            |
+
 ---
 ## **URL Project & Demo Video**
 - [Link Video Demo](https://drive.google.com/file/d/1EMw55HsMPsd4ShEblD8Au1vGqzS0BfHB/view?usp=sharing)
