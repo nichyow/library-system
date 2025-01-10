@@ -9,38 +9,6 @@ use Exception;
 class UserController extends BaseController
 {
     use ResponseTrait;
-
-    // public function register()
-    // {
-    //     try {
-    //         $userModel = new UserModel();
-
-    //         $username = $this->request->getPost('username');
-    //         $password = $this->request->getPost('password');
-
-    //         $existingUser = $userModel->where('username', $username)->first();
-    //         if ($existingUser) {
-    //             return redirect()->back()->with('error', 'Username sudah terdaftar, gunakan username lain.')->withInput();
-    //         }
-    //         if (!$username || !$password) {
-    //             return redirect()->back()->with('error', 'Username dan Password harus diisi.')->withInput();
-    //         }
-
-    //         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-    //         $userData = [
-    //             'username' => $username,
-    //             'password' => $hashedPassword
-    //         ];
-
-    //         $userModel->insert($userData);
-
-    //         return redirect()
-    //             ->to('/users/login');
-    //     } catch (Exception $e) {
-    //         return $this->failServerError($e->getMessage());
-    //     }
-    // }
     public function register()
     {
         try {

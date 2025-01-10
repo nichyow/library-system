@@ -1,68 +1,187 @@
-# CodeIgniter 4 Application Starter
+Berikut adalah dokumentasi lengkap dengan perbaikan yang sesuai dengan kode yang Anda kirimkan.
 
-## What is CodeIgniter?
+library-sistem - Dokumentasi Sistem
+Deskripsi
+Layanan ini adalah bagian dari sistem manajemen perpustakaan yang dirancang untuk memfasilitasi proses peminjaman buku. Layanan ini memungkinkan pengguna untuk meminjam buku dengan memvalidasi ketersediaan buku yang dikelola oleh layanan Book Management. Sistem ini dilengkapi dengan autentikasi berbasis token, memungkinkan hanya pengguna yang sah untuk melakukan peminjaman.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+Layanan Borrow Book ini terintegrasi dengan API Book Management untuk memastikan bahwa buku yang dipinjam tersedia dan memperbarui status buku setelah proses peminjaman berhasil.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+Cara Mengakses Layanan
+Clone Repository:
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+git clone https://github.com/nichyow/library-system.git
+cd library-system
+Install Dependencies:
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+composer install
+Konfigurasikan File .env: Salin file .env.example menjadi .env dan pastikan kredensial database sudah sesuai.
 
-## Installation & updates
+Jalankan Server Lokal:
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+php spark serve
+Akses layanan di http://localhost:8080.
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+Endpoint API
+1. Home
+Endpoint: GET /
+Deskripsi: Menampilkan halaman utama sistem.
 
-## Setup
+2. Borrower Service
+2.1 Menampilkan Daftar Peminjam
+Endpoint: GET /borrowers
+Deskripsi: Menampilkan daftar semua peminjam dalam sistem.
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+Response:
 
-## Important Change with index.php
+json
+Copy code
+{
+  "status": 200,
+  "borrowers": [
+    {
+      "id": 1,
+      "name": "nico",
+      "email": "nico@gmail.com",
+      "phone_number": "123456789",
+      "book_title": "TST",
+      "borrow_date": "2025-01-01",
+      "return_date": "2025-01-15"
+    }
+  ]
+}
+2.2 Menambahkan Data Peminjam
+Endpoint: POST /borrowers
+Deskripsi: Menambahkan data peminjam baru ke dalam sistem.
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+Request:
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+http
+Copy code
+POST /borrowers HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
 
-**Please** read the user guide for a better explanation of how CI4 works!
+{
+  "name": "nico",
+  "email": "nico@gmail.com",
+  "phone_number": "1234567890",
+  "book_title": "TST",
+  "borrow_date": "2025-01-01",
+  "return_date": "2025-01-15"
+}
+Response:
 
-## Repository Management
+json
+Copy code
+{
+  "status": 200,
+  "message": "Borrower added successfully!"
+}
+2.3 Menampilkan Form Tambah Data Peminjam
+Endpoint: GET /borrowers/create
+Deskripsi: Menampilkan form untuk menambahkan data peminjam.
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+3. User Service
+3.1 Register
+Endpoint: POST /users/register
+Deskripsi: Mendaftarkan pengguna baru ke sistem.
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+Request:
 
-## Server Requirements
+http
+Copy code
+POST /users/register HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+{
+  "username": "newuser",
+  "password": "password123"
+}
+Response (Sukses):
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+json
+Copy code
+{
+  "status": 200,
+  "message": "Registrasi berhasil. Silakan login."
+}
+Response (Gagal - Validasi):
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+json
+Copy code
+{
+  "status": 400,
+  "error": "Validation failed",
+  "messages": {
+    "username": "Username sudah digunakan, coba yang lain.",
+    "password": "Password harus mengandung minimal 1 angka dan 1 simbol."
+  }
+}
+3.2 Login
+Endpoint: POST /users/login
+Deskripsi: Login ke sistem menggunakan kredensial yang valid.
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+Request:
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+http
+Copy code
+POST /users/login HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "username": "newuser",
+  "password": "password123"
+}
+Response (Sukses):
+
+json
+Copy code
+{
+  "status": 200,
+  "message": "Login successful."
+}
+Response (Gagal - Kredensial Salah):
+
+json
+Copy code
+{
+  "status": 401,
+  "error": "Username atau password salah."
+}
+3.3 Logout
+Endpoint: GET /users/logout
+Deskripsi: Logout dari sistem dan mengakhiri sesi pengguna.
+
+Request:
+
+http
+Copy code
+GET /users/logout HTTP/1.1
+Host: localhost:8080
+Response:
+
+json
+Copy code
+{
+  "status": 200,
+  "message": "Logout successful."
+}
+Struktur Database
+Tabel Borrowers
+Field	Tipe Data	Deskripsi
+id	INT	Primary Key
+name	VARCHAR	Nama peminjam
+email	VARCHAR	Email peminjam
+phone_number	VARCHAR	Nomor telepon peminjam
+book_title	VARCHAR	Judul buku yang dipinjam
+borrow_date	DATE	Tanggal peminjaman
+return_date	DATE	Tanggal pengembalian
+Tabel Users
+Field	Tipe Data	Deskripsi
+id	INT	Primary Key
+username	VARCHAR	Nama pengguna unik
+password	VARCHAR	Kata sandi terenkripsi
+Kontributor
+[Nama Anda]: Pengembang Borrower & User Service
