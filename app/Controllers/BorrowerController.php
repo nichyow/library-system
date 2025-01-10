@@ -62,50 +62,6 @@ class BorrowerController extends BaseController
         }
     }
 
-    public function borrowBook()
-    {
-        try {
-            // Instansiasi BorrowerModel
-            $borrowerModel = new \App\Models\BorrowerModel();
-
-            // Ambil data dari request POST
-            $data = [
-                'borrower_id' => $this->request->getPost('borrower_id'),
-                'book_title'  => $this->request->getPost('book_title'),
-                'borrow_date' => $this->request->getPost('borrow_date') ?? date('Y-m-d'), // Default tanggal hari ini
-                'return_date' => $this->request->getPost('return_date'),
-            ];
-
-            // Validasi sederhana
-            if (empty($data['borrower_id']) || empty($data['book_title']) || empty($data['borrow_date']) || empty($data['return_date'])) {
-                return $this->fail('All fields are required.', 400);
-            }
-
-            // Periksa apakah borrower ada di database
-            $borrower = $borrowerModel->find($data['borrower_id']);
-            if (!$borrower) {
-                return $this->failNotFound('Borrower not found.');
-            }
-
-            // Tambahkan data pinjaman ke database
-            $borrowerModel->insert($data['borrower_id'], [
-                'book_title'  => $data['book_title'],
-                'borrow_date' => $data['borrow_date'],
-                'return_date' => $data['return_date'],
-            ]);
-
-            // Respon berhasil
-            return $this->respondCreated([
-                'status'  => 201,
-                'message' => 'Book borrowed successfully',
-            ]);
-        } catch (Exception $e) {
-            // Tangani error
-            return $this->failServerError($e->getMessage());
-        }
-    }
-
-
     public function listBorrowers()
     {
         $borrowerModel = new BorrowerModel();
@@ -118,7 +74,4 @@ class BorrowerController extends BaseController
     {
         return view('borrower/create');
     }
-
-
-
 }

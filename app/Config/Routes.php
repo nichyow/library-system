@@ -18,7 +18,6 @@ $routes->get('/', 'HomeController::index');
 $routes->get('/borrowers', 'BorrowerController::listBorrowers');
 $routes->get('/borrowers/create', 'BorrowerController::createView');
 $routes->post('/borrowers', 'BorrowerController::createBorrower');
-$routes->post('/borrowers/borrow', 'BorrowerController::borrowBook');
 
 // -----------------------------------------------------------------------------
 // User Service Routes
